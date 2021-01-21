@@ -1,0 +1,7 @@
+name: environment_scaleways
+
+dependencies:
+  - numpy
+  - matplotlib
+  - pandas
+  - plotly
