@@ -58,7 +58,7 @@ df.Element[(df.Domain == 'CropProduction') & (df.Element == 'Production')] = 'Cr
 df1 = df[(df.Domain == 'FoodBalances') &
          (df.Year >= 2014) & (df.Year <= 2016)]
 a = df1[(df1.Element == 'Production') ].groupby(['Item', 'Area']).mean().reset_index()
-a = a.rename(columns={'Value':'Production'})
+a = a.rename(columns={'Value':'Production(FoodBalances)'})
 b = df1[ (df1.Element == 'Food')].groupby(['Item', 'Area']).mean().reset_index()
 b = b.rename(columns={'Value':'Food'})
 d = df1[(df1.Element == 'Import Quantity')].groupby(['Item', 'Area']).mean().reset_index()
@@ -87,24 +87,27 @@ df5 = df[(df.Domain == 'CropProduction') &
          (df.Year >= 2014) & (df.Year <= 2016)] 
 j = df5[(df5.Element == 'AreaHarvested') ].groupby(['Item', 'Area']).mean().reset_index()
 j = j.rename(columns = {'Value':'AreaHarvested'})
+k = df5[(df5.Element == 'CropProduction') ].groupby(['Item', 'Area']).mean().reset_index()
+k = k.rename(columns = {'Value':'Production'})
 
 #drop year
-porVar = [a, b, g, h, i, j]
+porVar = [b, g, i, j, k]
 for cadaUno in porVar:
     cadaUno.drop('Year', axis=1, inplace=True)
 
 #merge
-df2 = a.merge(b, how='outer', on=['Item', 'Area'])
+df2 = b.merge(g, how='outer', on=['Item', 'Area'])
 for cadaUno in porVar[2:]:
     df2 = df2.merge(cadaUno, how='outer', on=['Item', 'Area'])
     
 #round
-df2['FoodSelfSufficiency'] = df2.Production / df2.Food  *100
+df2['Food'] = df2.Food  *1000
+df2['FoodSelfSufficiency'] = (df2.Production / df2.Food)  *100
 df2['AreaHarvested'] = (df2['AreaHarvested'] / 1000)
 
-df2['UnitValue'] = df2.GrossProductionValue / df2.Production 
+df2['UnitValue'] = df2.GrossProductionValue / df2.Production * 1000
 
-porInd = ['Production', 'Food', 'FoodPerCapita', 'PriceIndex', 'UnitValue', 
+porInd = ['Production', 'Food', 'FoodPerCapita', 'UnitValue', 
           'GrossProductionValue', 'AreaHarvested', 'FoodSelfSufficiency']
 for cadaUno in porInd:
     df2[cadaUno] = df2[cadaUno].round(1)

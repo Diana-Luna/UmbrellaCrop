@@ -14,8 +14,8 @@ Bananas,Bananas,Fruits,Crop
 Barley,Barley,Grains,Crop
 Barley and products,Barley,Grains,CropProducts
 Beans,Beans,Pulses,Crop
-"Beans, dry","Beans, dry",Pulses,CropProcessed
-"Beans, green",Beans,Vegetables,Crop
+"Beans, dry",Beans,Pulses,Crop
+"Beans, green","Beans, green",Vegetables,Crop
 Beer,Beer,Alcohol,Alcohol
 Beeswax,Beeswax,NonFood,NonFood
 Berries nes,Berries nes,Fruits,General
@@ -171,7 +171,7 @@ Pimento,Pimento,Vegetables,Crop
 Pineapples,Pineapples,Fruits,Crop
 Pineapples and products,Pineapples,Fruits,CropProducts
 Plantains,Plantains,Fruits,Crop
-Plantains and others,Plantains and others,Fruits,CropProducts
+Plantains and others,Plantains,Fruits,CropProducts
 Plums and sloes,Plums and sloes,Fruits,Crop
 Population,Population,Population,Population
 Potatoes,Potatoes,Roots,Crop
@@ -233,7 +233,7 @@ Vanilla,Vanilla,Spices,Crop
 "Vegetables, Other","Vegetables, Other",Vegetables,General
 Watermelons,Watermelons,Fruits,Crop
 Wheat,Wheat,Grains,Crop
-Wheat and products,Wheat,Grains,CropProducts
+Wheat and products,Wheat,Grains,Crop
 Wine,Wine,Alcohol,Alcohol
 "Wool, greasy","Wool, greasy",NonFood,NonFood
 Yams,Yams,Roots,Crop
