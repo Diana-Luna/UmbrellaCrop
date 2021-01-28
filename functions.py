@@ -36,7 +36,7 @@ df.rename(columns={'name':'Item'}, inplace=True)
 
 #Calculate for LVB
 #whyprice index does not work?
-LVB = df.groupby(['Domain', 'Year', 'Element', 'Item']).mean()
+LVB = df.groupby(['Domain', 'Year', 'Element', 'Item']).sum()
 LVB['Area'] = 'LVB'
 LVB.reset_index(inplace=True)
 df = pd.concat([LVB, df])
@@ -54,7 +54,7 @@ df.Element[(df.Domain == 'CropProduction') & (df.Element == 'Production')] = 'Cr
 ####################
 # Food Balance
 df1 = df[(df.Domain == 'FoodBalances') &
-         (df.Year >= 1991) & (df.Year <= 2019)]
+         (df.Year >= 2015) & (df.Year <= 2019)]
 a = df1[(df1.Element == 'Production') ].groupby(['Item', 'Area']).mean().reset_index()
 a = a.rename(columns={'Value':'Production'})
 b = df1[ (df1.Element == 'Food')].groupby(['Item', 'Area']).mean().reset_index()
@@ -70,19 +70,19 @@ g = g.rename(columns={'Value':'FoodPerCapita'})
 
 #Producer Price Index
 df3 = df[(df.Domain == 'ProducerPrices') &
-         (df.Year >= 1991) & (df.Year <= 2019)] 
+         (df.Year >= 2015) & (df.Year <= 2019)] 
 h = df3[(df3.Element == 'PriceIndex') ].groupby(['Item', 'Area']).mean().reset_index()
 h = h.rename(columns = {'Value':'PriceIndex'})
 
 #ValueAgProduction
 df4 = df[(df.Domain == 'ValueAgProduction') & 
-         (df.Year >= 1991) & (df.Year <= 2019)] 
+         (df.Year >= 2015) & (df.Year <= 2019)] 
 i = df4[(df4.Element == 'GrossProductionValue') ].groupby(['Item', 'Area']).mean().reset_index()
 i = i.rename(columns = {'Value':'GrossProductionValue'})
 
 #CropProduction 
 df5 = df[(df.Domain == 'CropProduction') &
-         (df.Year >= 1991) & (df.Year <= 2019)] 
+         (df.Year >= 2015) & (df.Year <= 2019)] 
 j = df5[(df5.Element == 'AreaHarvested') ].groupby(['Item', 'Area']).mean().reset_index()
 j = j.rename(columns = {'Value':'AreaHarvested'})
 
