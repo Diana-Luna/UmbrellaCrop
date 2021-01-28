@@ -12,7 +12,7 @@ import plotly.express as px
 df = pd.read_csv('FAOSTAT_downloaded20210119.csv')
 foods = pd.read_csv('foods.csv')
 
-df = df[(df['Area'] == 'BDI') & (df['Area'] == 'RWA') & (df['Area'] == 'UGA')]
+df = df[(df['Area'] == 'BDI') | (df['Area'] == 'RWA') | (df['Area'] == 'UGA')]
 
 #Bind old (-2013) and new time series (2014-): Food Balances and Producer prices
 df.Domain.replace('Food Balances (old methodology and population)', 'FoodBalances', inplace=True)
@@ -24,7 +24,7 @@ df.Domain.replace('Crops', 'CropProduction', inplace=True)
 df.Domain.replace('Value of Agricultural Production', 'ValueAgProduction', inplace=True)
 df.Element.replace('Food supply quantity (kg/capita/yr)', 'FoodPerCapita', inplace=True)
 df.Element.replace('Producer Price Index (2014-2016 = 100)', 'PriceIndex', inplace=True)
-df.Element.replace('Gross Production Value (constant 2014-2016 million US$)','GrossProductionValue', inplace=True)
+df.Element.replace('Gross Production Value (constant 2014-2016 1000 I$)','GrossProductionValue', inplace=True)
 df.Element.replace('Area harvested','AreaHarvested', inplace=True)
 
 #merge with dictionary including "Food groups". Category 2 based on HDDS.
@@ -101,7 +101,10 @@ for cadaUno in porVar[2:]:
 #round
 df2['FoodSelfSufficiency'] = df2.Production / df2.Food  *100
 df2['AreaHarvested'] = (df2['AreaHarvested'] / 1000)
-porInd = ['Production', 'Food', 'FoodPerCapita', 'PriceIndex', 
+
+df2['UnitValue'] = df2.GrossProductionValue / df2.Production 
+
+porInd = ['Production', 'Food', 'FoodPerCapita', 'PriceIndex', 'UnitValue', 
           'GrossProductionValue', 'AreaHarvested', 'FoodSelfSufficiency']
 for cadaUno in porInd:
     df2[cadaUno] = df2[cadaUno].round(1)
