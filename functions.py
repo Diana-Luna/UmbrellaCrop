@@ -12,6 +12,8 @@ import plotly.express as px
 df = pd.read_csv('FAOSTAT_downloaded20210119.csv')
 foods = pd.read_csv('foods.csv')
 
+df = df[(df['Area'] == 'BDI') & (df['Area'] == 'RWA') & (df['Area'] == 'UGA')]
+
 #Bind old (-2013) and new time series (2014-): Food Balances and Producer prices
 df.Domain.replace('Food Balances (old methodology and population)', 'FoodBalances', inplace=True)
 df.Domain.replace('New Food Balances', 'FoodBalances', inplace=True)
@@ -54,7 +56,7 @@ df.Element[(df.Domain == 'CropProduction') & (df.Element == 'Production')] = 'Cr
 ####################
 # Food Balance
 df1 = df[(df.Domain == 'FoodBalances') &
-         (df.Year >= 2015) & (df.Year <= 2019)]
+         (df.Year >= 2014) & (df.Year <= 2016)]
 a = df1[(df1.Element == 'Production') ].groupby(['Item', 'Area']).mean().reset_index()
 a = a.rename(columns={'Value':'Production'})
 b = df1[ (df1.Element == 'Food')].groupby(['Item', 'Area']).mean().reset_index()
@@ -70,19 +72,19 @@ g = g.rename(columns={'Value':'FoodPerCapita'})
 
 #Producer Price Index
 df3 = df[(df.Domain == 'ProducerPrices') &
-         (df.Year >= 2015) & (df.Year <= 2019)] 
+         (df.Year >= 2014) & (df.Year <= 2016)] 
 h = df3[(df3.Element == 'PriceIndex') ].groupby(['Item', 'Area']).mean().reset_index()
 h = h.rename(columns = {'Value':'PriceIndex'})
 
 #ValueAgProduction
 df4 = df[(df.Domain == 'ValueAgProduction') & 
-         (df.Year >= 2015) & (df.Year <= 2019)] 
+         (df.Year >= 2014) & (df.Year <= 2016)] 
 i = df4[(df4.Element == 'GrossProductionValue') ].groupby(['Item', 'Area']).mean().reset_index()
 i = i.rename(columns = {'Value':'GrossProductionValue'})
 
 #CropProduction 
 df5 = df[(df.Domain == 'CropProduction') &
-         (df.Year >= 2015) & (df.Year <= 2019)] 
+         (df.Year >= 2014) & (df.Year <= 2016)] 
 j = df5[(df5.Element == 'AreaHarvested') ].groupby(['Item', 'Area']).mean().reset_index()
 j = j.rename(columns = {'Value':'AreaHarvested'})
 
